@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dimen_10dp"
-        app:cardCornerRadius="@dimen/dimen_5dp"
+        app:cardCornerRadius="@dimen/dimen_8dp"
         app:cardElevation="@dimen/dimen_5dp">
 
         <RelativeLayout
@@ -18,6 +18,7 @@
 
             <ImageView
                 android:id="@+id/img_photo"
+                android:transitionName="photo"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_alignParentLeft="true"
@@ -50,7 +51,7 @@
                 android:layout_toLeftOf="@+id/ll_published"
                 android:text="@string/author"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dimen_16sp" />
+                android:textSize="@dimen/dimen_14sp" />
 
             <LinearLayout
                 android:id="@+id/ll_published"
@@ -74,7 +75,7 @@
                 <TextView
                     android:id="@+id/tv_published"
                     android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/dimen_16dp"
+                    android:textSize="@dimen/dimen_14sp"
                     android:text="@string/publish_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -82,10 +83,11 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:text="Title"
+                android:text="@string/title"
                 android:layout_below="@+id/img_photo"
                 android:layout_margin="@dimen/dimen_8dp"
-                android:textSize="@dimen/dimen_18sp"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimen_16sp"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -93,7 +95,7 @@
             <TextView
                 android:id="@+id/tv_description"
                 android:text="@string/description"
-                android:textSize="@dimen/dimen_16sp"
+                android:textSize="@dimen/dimen_14sp"
                 android:maxLines="1"
                 android:layout_below="@+id/tv_title"
                 android:layout_marginLeft="@dimen/dimen_8dp"
@@ -105,9 +107,10 @@
             <TextView
                 android:id="@+id/tv_source"
                 android:text="@string/source"
-                android:textSize="@dimen/dimen_16sp"
+                android:textSize="@dimen/dimen_14sp"
                 android:layout_below="@+id/tv_description"
                 android:layout_marginLeft="@dimen/dimen_8dp"
+                android:textStyle="bold"
                 android:layout_marginBottom="@dimen/dimen_8dp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
@@ -116,7 +119,7 @@
             <TextView
                 android:id="@+id/tv_time"
                 android:text="@string/time"
-                android:textSize="@dimen/dimen_16sp"
+                android:textSize="@dimen/dimen_14sp"
                 android:layout_below="@+id/tv_description"
                 android:layout_toRightOf="@+id/tv_source"
                 android:layout_marginLeft="@dimen/dimen_8dp"

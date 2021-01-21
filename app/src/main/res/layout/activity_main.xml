@@ -26,9 +26,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_8dp"
                     android:layout_marginTop="@dimen/dimen_8dp"
-                    android:text="@string/title"
+                    android:text="@string/top_headline"
                     android:textColor="@color/color_title"
-                    android:textSize="@dimen/dimen_16sp" />
+                    android:textSize="@dimen/dimen_18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_top_headline"

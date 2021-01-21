@@ -78,6 +78,8 @@ public class TopHeadlineAdapter extends RecyclerView.Adapter<TopHeadlineAdapter.
         holder.tvTitle.setText(article.getTitle());
         holder.tvDesc.setText(article.getDescription());
         holder.tvSource.setText(article.getSource().getName());
+        holder.tvTime.setText(" \u2022 " + Utils.getTimeAgo(article.getPublishedAt()));
+        holder.tvPublished.setText(Utils.getPublishTime(article.getPublishedAt()));
     }
 
     @Override
@@ -95,7 +97,6 @@ public class TopHeadlineAdapter extends RecyclerView.Adapter<TopHeadlineAdapter.
         private TextView tvSource;
         private TextView tvTime;
         private ProgressBar progressBar;
-        private OnClickListener onClickListener;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,14 +112,14 @@ public class TopHeadlineAdapter extends RecyclerView.Adapter<TopHeadlineAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickListener.onItemClick(v, getAdapterPosition());
+                    onClickListener.onItemClick(v, getAdapterPosition(), imgPhoto);
                 }
             });
         }
     }
 
     public interface OnClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position, ImageView imageView);
     }
 }
 
