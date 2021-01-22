@@ -1,14 +1,20 @@
 package com.example.news.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ActivityOptions;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements TopHeadlineAdapte
         setContentView(R.layout.activity_main);
 
         initView();
-        loadArticles();
+        loadArticles("");
     }
 
     private void initView() {
@@ -51,10 +57,15 @@ public class MainActivity extends AppCompatActivity implements TopHeadlineAdapte
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private void loadArticles() {
+    private void loadArticles(String query) {
         swipeRefreshLayout.setRefreshing(true);
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        Call<News> call = apiInterface.getNews(API_KEY, "us");
+        Call<News> call;
+        if (query.length() > 0) {
+            call = apiInterface.searchNews(API_KEY, "en", query, "publishedAt");
+        } else {
+            call = apiInterface.getNews(API_KEY, "us");
+        }
         call.enqueue(new Callback<News>() {
             @Override
             public void onResponse(Call<News> call, Response<News> response) {
@@ -95,6 +106,29 @@ public class MainActivity extends AppCompatActivity implements TopHeadlineAdapte
 
     @Override
     public void onRefresh() {
-        loadArticles();
+        loadArticles("");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.item_seach).getActionView();
+        searchView.setQueryHint("Search...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.length() > 0) {
+                    loadArticles(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
     }
 }

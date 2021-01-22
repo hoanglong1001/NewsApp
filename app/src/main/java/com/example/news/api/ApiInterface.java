@@ -10,6 +10,12 @@ public interface ApiInterface {
     @GET("top-headlines")
     Call<News> getNews(
         @Query("apiKey") String apiKey,
-        @Query("country") String country
-    );
+        @Query("country") String country);
+
+    @GET("everything")
+    Call<News> searchNews(
+            @Query("apiKey") String apiKey,
+            @Query("language") String language,
+            @Query("q") String q,
+            @Query("sortBy") String sortBy);
 }
