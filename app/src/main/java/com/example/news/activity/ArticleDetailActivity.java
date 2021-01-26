@@ -1,10 +1,16 @@
 package com.example.news.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,6 +24,10 @@ import com.example.news.R;
 import com.example.news.util.Utils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArticleDetailActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
@@ -35,6 +45,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements AppBarLa
     private AppBarLayout appBar;
     private LinearLayout llPublished;
     private LinearLayout llToolbar;
+    private String source;
+    private String link;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +58,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements AppBarLa
     }
 
     private void getData() {
+        source = getIntent().getStringExtra("source");
+        link = getIntent().getStringExtra("url");
         tvSource.setText(getIntent().getStringExtra("source"));
         tvLink.setText(getIntent().getStringExtra("url"));
         Glide.with(this).load(getIntent().getStringExtra("image"))
@@ -101,9 +115,37 @@ public class ArticleDetailActivity extends AppCompatActivity implements AppBarLa
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_article_detail, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.share:
+                Intent intentShare = new Intent(Intent.ACTION_SEND);
+                intentShare.setType("text/plain");
+                intentShare.putExtra(Intent.EXTRA_SUBJECT, source);
+                startActivity(Intent.createChooser(intentShare, "share with: "));
+                return true;
+            case R.id.web_browser:
+                Intent intentView = new Intent(Intent.ACTION_VIEW);
+                intentView.setData(Uri.parse(link));
+                startActivity(intentView);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
     }
 }
 
